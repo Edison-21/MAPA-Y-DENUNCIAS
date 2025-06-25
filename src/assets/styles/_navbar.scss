@@ -1,0 +1,347 @@
+// Variables del navbar
+$navbar-height: 70px;
+$navbar-bg: #ffffff;
+$navbar-border: #e9ecef;
+$navbar-text: #333333;
+$navbar-text-muted: #6c757d;
+$navbar-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$navbar-transition: all 0.3s ease;
+
+// Navbar principal
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
+  background: $navbar-bg;
+  border-bottom: 1px solid $navbar-border;
+  box-shadow: $navbar-shadow;
+  z-index: 999;
+  transition: $navbar-transition;
+
+  &.sidebar-collapsed {
+    left: 70px;
+  }
+
+  &.sidebar-expanded {
+    left: 280px;
+  }
+}
+
+// Contenedor del navbar
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 1.5rem;
+  max-width: 100%;
+}
+
+// Lado izquierdo del navbar
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: $navbar-text;
+    font-weight: 600;
+    font-size: 1.25rem;
+
+    .brand-logo {
+      font-size: 1.5rem;
+      color: #007bff;
+    }
+
+    .brand-text {
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+  }
+
+  .navbar-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid $navbar-border;
+
+    .breadcrumb-item {
+      color: $navbar-text-muted;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: $navbar-transition;
+
+      &:hover {
+        color: $navbar-text;
+      }
+
+      &.active {
+        color: $navbar-text;
+        font-weight: 500;
+      }
+    }
+
+    .breadcrumb-separator {
+      color: $navbar-text-muted;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+}
+
+// Lado derecho del navbar
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .navbar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    color: $navbar-text-muted;
+    cursor: pointer;
+    transition: $navbar-transition;
+    position: relative;
+
+    &:hover {
+      background: #f8f9fa;
+      color: $navbar-text;
+    }
+
+    &.active {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .button-icon {
+      font-size: 1.1rem;
+    }
+
+    .button-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: #dc3545;
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 10px;
+      min-width: 16px;
+      text-align: center;
+    }
+  }
+
+  .navbar-divider {
+    width: 1px;
+    height: 24px;
+    background: $navbar-border;
+    margin: 0 0.5rem;
+  }
+
+  .navbar-user-container {
+    position: relative;
+  }
+
+  .navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: $navbar-transition;
+
+    &:hover {
+      background: #f8f9fa;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #007bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .user-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $navbar-text;
+        line-height: 1.2;
+      }
+
+      .user-role {
+        font-size: 0.75rem;
+        color: $navbar-text-muted;
+        line-height: 1.2;
+      }
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .user-dropdown-arrow {
+      color: $navbar-text-muted;
+      font-size: 0.8rem;
+      transition: $navbar-transition;
+
+      &.expanded {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .navbar-user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid $navbar-border;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 250px;
+    z-index: 1000;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    animation: slideDown 0.2s ease-out;
+
+    .dropdown-header {
+      padding: 1rem;
+      border-bottom: 1px solid $navbar-border;
+      background: #f8f9fa;
+
+      .dropdown-user-name {
+        font-weight: 600;
+        color: $navbar-text;
+        margin-bottom: 0.25rem;
+      }
+
+      .dropdown-user-email {
+        font-size: 0.85rem;
+        color: $navbar-text-muted;
+      }
+    }
+
+    .dropdown-menu {
+      padding: 0.5rem 0;
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: $navbar-text;
+        text-decoration: none;
+        transition: $navbar-transition;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        font-size: 0.95rem;
+
+        &:hover {
+          background: #f8f9fa;
+        }
+
+        &.logout-button {
+          color: #dc3545;
+          font-weight: 500;
+
+          &:hover {
+            background: #fff5f5;
+          }
+        }
+
+        .dropdown-icon {
+          font-size: 1.1rem;
+          width: 20px;
+          text-align: center;
+        }
+
+        .dropdown-text {
+          flex: 1;
+        }
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background: $navbar-border;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .navbar {
+    left: 0 !important;
+  }
+
+  .navbar-container {
+    padding: 0 1rem;
+  }
+
+  .navbar-left {
+    .navbar-breadcrumb {
+      display: none;
+    }
+  }
+
+  .navbar-right {
+    .navbar-user {
+      .user-info {
+        display: none;
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

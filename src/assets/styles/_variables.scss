@@ -1,0 +1,99 @@
+// Colores principales - Glassmorphism Water Theme
+$primary-color: #0ea5e9; // Sky blue
+$secondary-color: #06b6d4; // Cyan
+$success-color: #10b981; // Emerald
+$danger-color: #ef4444; // Red
+$warning-color: #f59e0b; // Amber
+$info-color: #06b6d4; // Cyan
+$light-color: #f8fafc; // Slate 50
+$dark-color: #1e293b; // Slate 800
+
+// Colores de texto
+$text-primary: #0f172a; // Slate 900
+$text-secondary: #475569; // Slate 600
+$text-muted: #64748b; // Slate 500
+$text-light: #ffffff;
+
+// Colores de fondo - Glassmorphism
+$bg-primary: rgba(255, 255, 255, 0.95); // Glass white
+$bg-secondary: rgba(248, 250, 252, 0.8); // Glass light
+$bg-dark: rgba(30, 41, 59, 0.9); // Glass dark
+$bg-glass: rgba(255, 255, 255, 0.25); // Pure glass
+$bg-glass-dark: rgba(15, 23, 42, 0.25); // Dark glass
+
+// Colores de agua para el proyecto
+$water-primary: #0ea5e9; // Sky blue
+$water-secondary: #06b6d4; // Cyan
+$water-accent: #0891b2; // Sky 600
+$water-light: #e0f2fe; // Sky 100
+$water-dark: #0369a1; // Sky 700
+
+// Bordes - Glassmorphism
+$border-color: rgba(148, 163, 184, 0.2); // Glass border
+$border-radius: 16px; // Más redondeado
+$border-radius-sm: 8px;
+$border-radius-lg: 24px;
+$border-radius-xl: 32px;
+
+// Espaciado
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-xxl: 3rem;
+
+// Tipografía
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-md: 1.05rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-xxl: 1.5rem;
+
+// Pesos de fuente
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Sombras - Glassmorphism
+$shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+$shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+
+// Sombras de glassmorphism
+$glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+$glass-border: 1px solid rgba(255, 255, 255, 0.18);
+
+// Transiciones
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Gradientes de agua
+$gradient-water-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+$gradient-water-secondary: linear-gradient(135deg, #0891b2 0%, #0ea5e9 100%);
+$gradient-water-accent: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+$gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
