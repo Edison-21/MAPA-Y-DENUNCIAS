@@ -1,0 +1,1263 @@
+@use './_variables' as *;
+@use 'sass:color';
+
+// Variables específicas para denuncias - Glassmorphism Water Theme
+$complaint-primary-color: #0ea5e9;
+$complaint-secondary-color: #06b6d4;
+$complaint-success-color: #10b981;
+$complaint-warning-color: #f59e0b;
+$complaint-danger-color: #ef4444;
+$complaint-info-color: #0891b2;
+
+// Estados de denuncias - Glassmorphism
+$complaint-status-pending: #f59e0b;
+$complaint-status-in-progress: #0891b2;
+$complaint-status-resolved: #10b981;
+$complaint-status-closed: #64748b;
+$complaint-status-urgent: #ef4444;
+
+// Prioridades - Glassmorphism
+$priority-low: #10b981;
+$priority-medium: #0891b2;
+$priority-high: #f59e0b;
+$priority-critical: #ef4444;
+
+// Categorías - Water Theme
+$category-water-leak: #0891b2;
+$category-contamination: #ef4444;
+$category-meter-issue: #f59e0b;
+$category-pressure: #0ea5e9;
+$category-billing: #64748b;
+$category-other: #6b7280;
+
+// Gradientes glassmorphism para denuncias
+$complaint-gradient-primary: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+$complaint-gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
+$complaint-gradient-header: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+
+// Sombras glassmorphism
+$complaint-shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+$complaint-shadow-medium: 0 12px 40px rgba(31, 38, 135, 0.4);
+$complaint-shadow-heavy: 0 20px 60px rgba(31, 38, 135, 0.5);
+
+// Animaciones
+$complaint-transition-fast: 0.15s ease;
+$complaint-transition-base: 0.3s ease;
+$complaint-transition-slow: 0.5s ease;
+
+// Estilos principales de la página de denuncias
+.complaint-list-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f2fe 100%);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(8, 145, 178, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// Cabecera glassmorphism
+.gradient-header {
+  position: relative;
+  background: $complaint-gradient-header;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: $glass-border;
+  box-shadow: $complaint-shadow-light;
+  z-index: 10;
+  
+  .header-content {
+    padding: $spacing-xl $spacing-xxl;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    
+    &.sticky {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    h1 {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: $font-weight-bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin: 0;
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: $font-size-lg;
+      margin: 0;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+// Toolbar glassmorphism
+.toolbar-section {
+  background: $bg-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: $glass-border;
+  box-shadow: $complaint-shadow-light;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  
+  &.modern-toolbar {
+    .toolbar-content {
+      padding: $spacing-lg $spacing-xxl;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: $spacing-lg;
+    }
+  }
+}
+
+// Sección de búsqueda glassmorphism
+.search-section {
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: $bg-glass;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: $glass-border;
+    border-radius: $border-radius-xl;
+    padding: $spacing-sm $spacing-md;
+    box-shadow: $complaint-shadow-light;
+    transition: all $complaint-transition-base;
+    
+    &:focus-within {
+      box-shadow: $complaint-shadow-medium;
+      transform: translateY(-2px);
+    }
+    
+    .search-icon {
+      font-size: 1.2rem;
+      color: $text-secondary;
+      margin-right: $spacing-sm;
+    }
+    
+    .search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: $text-primary;
+      font-size: $font-size-base;
+      width: 300px;
+      
+      &::placeholder {
+        color: $text-muted;
+      }
+    }
+    
+    .clear-search {
+      background: none;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      padding: $spacing-xs;
+      border-radius: 50%;
+      transition: all $complaint-transition-fast;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+// Filtros glassmorphism
+.filters-section {
+  display: flex;
+  gap: $spacing-lg;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    
+    .filter-label {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .filter-buttons {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .filter-btn {
+        background: $bg-glass;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: $glass-border;
+        border-radius: $border-radius-lg;
+        padding: $spacing-sm $spacing-md;
+        color: $text-primary;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        cursor: pointer;
+        transition: all $complaint-transition-base;
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-1px);
+          box-shadow: $complaint-shadow-light;
+        }
+        
+        &.active {
+          background: $gradient-water-primary;
+          color: white;
+          box-shadow: $complaint-shadow-medium;
+        }
+        
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          
+          &.pending { background: $complaint-status-pending; }
+          &.in-progress { background: $complaint-status-in-progress; }
+          &.resolved { background: $complaint-status-resolved; }
+          &.urgent { background: $complaint-status-urgent; }
+        }
+        
+        .priority-indicator {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          
+          &.critical { background: $priority-critical; }
+          &.high { background: $priority-high; }
+          &.medium { background: $priority-medium; }
+          &.low { background: $priority-low; }
+        }
+      }
+    }
+    
+    .category-select {
+      background: $bg-glass;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: $glass-border;
+      border-radius: $border-radius-lg;
+      padding: $spacing-sm $spacing-md;
+      color: $text-primary;
+      font-size: $font-size-sm;
+      cursor: pointer;
+      transition: all $complaint-transition-base;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: $complaint-shadow-light;
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: $complaint-shadow-medium;
+      }
+    }
+  }
+}
+
+// Acciones glassmorphism
+.actions-section {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+  
+  .view-toggle {
+    display: flex;
+    background: $bg-glass;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: $glass-border;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xs;
+    
+    .view-btn {
+      background: transparent;
+      border: none;
+      border-radius: $border-radius-sm;
+      padding: $spacing-sm $spacing-md;
+      color: $text-primary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all $complaint-transition-base;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      &.active {
+        background: $gradient-water-primary;
+        color: white;
+        box-shadow: $complaint-shadow-light;
+      }
+      
+      .btn-icon {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .create-btn, .glass-button.primary {
+    padding: $spacing-xl $spacing-xxl;
+    font-size: 1.18rem;
+    border-radius: 2rem;
+    box-shadow: 0 10px 32px rgba(14, 165, 233, 0.20), $complaint-shadow-medium;
+    background: $gradient-water-primary;
+    border: none;
+    color: white;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: all $complaint-transition-base;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 40px rgba(14, 165, 233, 0.22), $complaint-shadow-heavy;
+    }
+    .btn-icon {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// Contenido principal glassmorphism
+.main-content {
+  padding: $spacing-xxl;
+  position: relative;
+  z-index: 1;
+  
+  &.modern-main-content {
+    .cards-view {
+      &.modern-cards-view {
+        .cards-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+          gap: $spacing-xl;
+          
+          &.modern-cards-grid {
+            .complaint-card {
+              background: $complaint-gradient-card;
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: $glass-border;
+              border-radius: $border-radius-xl;
+              box-shadow: $complaint-shadow-light;
+              overflow: hidden;
+              cursor: pointer;
+              transition: all $complaint-transition-base;
+              animation: cardFloat 0.6s ease-out;
+              
+              &:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: $complaint-shadow-heavy;
+              }
+              
+              &.modern-complaint-card {
+                .card-header {
+                  background: $complaint-gradient-primary;
+                  backdrop-filter: blur(20px);
+                  -webkit-backdrop-filter: blur(20px);
+                  padding: $spacing-lg;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border-bottom: $glass-border;
+                  
+                  .complaint-id {
+                    font-weight: $font-weight-bold;
+                    color: $text-primary;
+                    font-size: $font-size-lg;
+                    background: rgba(255, 255, 255, 0.2);
+                    padding: $spacing-xs $spacing-sm;
+                    border-radius: $border-radius-sm;
+                  }
+                  
+                  .status-badge {
+                    padding: $spacing-xs $spacing-md;
+                    border-radius: $border-radius-lg;
+                    font-size: $font-size-xs;
+                    font-weight: $font-weight-semibold;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    
+                    &.pending {
+                      background: rgba($complaint-status-pending, 0.2);
+                      color: $complaint-status-pending;
+                      border: 1px solid rgba($complaint-status-pending, 0.3);
+                    }
+                    
+                    &.in-progress {
+                      background: rgba($complaint-status-in-progress, 0.2);
+                      color: $complaint-status-in-progress;
+                      border: 1px solid rgba($complaint-status-in-progress, 0.3);
+                    }
+                    
+                    &.resolved {
+                      background: rgba($complaint-status-resolved, 0.2);
+                      color: $complaint-status-resolved;
+                      border: 1px solid rgba($complaint-status-resolved, 0.3);
+                    }
+                    
+                    &.urgent {
+                      background: rgba($complaint-status-urgent, 0.2);
+                      color: $complaint-status-urgent;
+                      border: 1px solid rgba($complaint-status-urgent, 0.3);
+                    }
+                  }
+                }
+                
+                .card-content {
+                  padding: $spacing-xl;
+                  
+                  .complaint-title {
+                    font-size: $font-size-xl;
+                    font-weight: $font-weight-bold;
+                    color: $text-primary;
+                    margin-bottom: $spacing-md;
+                    line-height: 1.3;
+                  }
+                  
+                  .complaint-description {
+                    color: $text-secondary;
+                    font-size: $font-size-base;
+                    line-height: 1.6;
+                    margin-bottom: $spacing-lg;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                  }
+                  
+                  .complaint-meta {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-md;
+                    margin-bottom: $spacing-lg;
+                    
+                    .meta-item {
+                      display: flex;
+                      align-items: center;
+                      gap: $spacing-md;
+                      font-size: $font-size-sm;
+                      color: $text-secondary;
+                      background: rgba(255, 255, 255, 0.1);
+                      padding: $spacing-sm;
+                      border-radius: $border-radius-sm;
+                      
+                      .meta-icon {
+                        font-size: 1.2rem;
+                        width: 20px;
+                        text-align: center;
+                      }
+                      
+                      .meta-text {
+                        flex: 1;
+                        font-weight: $font-weight-medium;
+                      }
+                    }
+                  }
+                  
+                  .priority-indicator {
+                    font-size: $font-size-sm;
+                    font-weight: $font-weight-semibold;
+                    padding: $spacing-sm $spacing-md;
+                    border-radius: $border-radius-lg;
+                    text-align: center;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    
+                    &.low {
+                      background: rgba($priority-low, 0.2);
+                      color: $priority-low;
+                      border: 1px solid rgba($priority-low, 0.3);
+                    }
+                    
+                    &.medium {
+                      background: rgba($priority-medium, 0.2);
+                      color: $priority-medium;
+                      border: 1px solid rgba($priority-medium, 0.3);
+                    }
+                    
+                    &.high {
+                      background: rgba($priority-high, 0.2);
+                      color: $priority-high;
+                      border: 1px solid rgba($priority-high, 0.3);
+                    }
+                    
+                    &.critical {
+                      background: rgba($priority-critical, 0.2);
+                      color: $priority-critical;
+                      border: 1px solid rgba($priority-critical, 0.3);
+                    }
+                  }
+                }
+                
+                .card-actions {
+                  padding: $spacing-lg;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-top: $glass-border;
+                  display: flex;
+                  gap: $spacing-sm;
+                  
+                  .action-btn {
+                    flex: 1;
+                    background: $bg-glass;
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    border: $glass-border;
+                    border-radius: $border-radius-lg;
+                    padding: $spacing-sm;
+                    color: $text-primary;
+                    font-size: $font-size-sm;
+                    font-weight: $font-weight-medium;
+                    cursor: pointer;
+                    transition: all $complaint-transition-base;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: $spacing-xs;
+                    
+                    &:hover {
+                      background: rgba(255, 255, 255, 0.2);
+                      transform: translateY(-1px);
+                    }
+                    
+                    &.primary {
+                      background: $gradient-water-primary;
+                      color: white;
+                      
+                      &:hover {
+                        box-shadow: $complaint-shadow-light;
+                      }
+                    }
+                    
+                    .btn-icon {
+                      font-size: 1rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes cardFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Estados especiales
+.complaint-card {
+  &.urgent {
+    border-left: 4px solid $complaint-status-urgent;
+    background: linear-gradient(135deg, rgba($complaint-status-urgent, 0.1) 0%, $complaint-gradient-card 100%);
+  }
+  
+  &.critical {
+    background: linear-gradient(135deg, rgba($priority-critical, 0.1) 0%, $complaint-gradient-card 100%);
+  }
+  
+  &.high {
+    background: linear-gradient(135deg, rgba($priority-high, 0.1) 0%, $complaint-gradient-card 100%);
+  }
+}
+
+// Estilos de la tabla de denuncias
+.complaints-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $spacing-md;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+  }
+
+  th {
+    background: $bg-secondary;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-sm;
+  }
+
+  td {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+
+    &.complaint-id {
+      font-weight: $font-weight-bold;
+      color: $text-primary;
+    }
+
+    &.complaint-title {
+      font-weight: $font-weight-medium;
+      color: $text-primary;
+      max-width: 200px;
+    }
+  }
+
+  tr {
+    transition: all $complaint-transition-base;
+
+    &:hover {
+      background: $bg-secondary;
+    }
+
+    &.urgent {
+      background: rgba($complaint-status-urgent, 0.05);
+    }
+
+    &.critical {
+      background: rgba($priority-critical, 0.1);
+    }
+  }
+
+  .category-badge, .priority-badge, .status-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+  }
+
+  .category-badge {
+    &.water-leak {
+      background: rgba($category-water-leak, 0.1);
+      color: $category-water-leak;
+    }
+
+    &.contamination {
+      background: rgba($category-contamination, 0.1);
+      color: $category-contamination;
+    }
+
+    &.meter-issue {
+      background: rgba($category-meter-issue, 0.1);
+      color: $category-meter-issue;
+    }
+
+    &.pressure {
+      background: rgba($category-pressure, 0.1);
+      color: $category-pressure;
+    }
+
+    &.billing {
+      background: rgba($category-billing, 0.1);
+      color: $category-billing;
+    }
+  }
+
+  .priority-badge {
+    &.low {
+      background: rgba($priority-low, 0.1);
+      color: $priority-low;
+    }
+
+    &.medium {
+      background: rgba($priority-medium, 0.1);
+      color: $priority-medium;
+    }
+
+    &.high {
+      background: rgba($priority-high, 0.1);
+      color: $priority-high;
+    }
+
+    &.critical {
+      background: rgba($priority-critical, 0.1);
+      color: $priority-critical;
+    }
+  }
+
+  .status-badge {
+    &.pending {
+      background: rgba($complaint-status-pending, 0.1);
+      color: $complaint-status-pending;
+    }
+
+    &.in-progress {
+      background: rgba($complaint-status-in-progress, 0.1);
+      color: $complaint-status-in-progress;
+    }
+
+    &.resolved {
+      background: rgba($complaint-status-resolved, 0.1);
+      color: $complaint-status-resolved;
+    }
+
+    &.urgent {
+      background: rgba($complaint-status-urgent, 0.1);
+      color: $complaint-status-urgent;
+    }
+  }
+
+  .table-actions {
+    display: flex;
+    gap: $spacing-sm;
+
+    .table-btn {
+      padding: 4px 8px;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-sm;
+      background: white;
+      cursor: pointer;
+      transition: all $complaint-transition-base;
+      font-size: 0.9rem;
+
+      &:hover {
+        background: $complaint-primary-color;
+        color: white;
+        border-color: $complaint-primary-color;
+      }
+    }
+  }
+}
+
+// Estilos del timeline de historial
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .timeline-item {
+    display: flex;
+    gap: $spacing-md;
+
+    .timeline-marker {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: $bg-secondary;
+      border: 2px solid $border-color;
+
+      &.created { border-color: $complaint-status-resolved; }
+      &.assigned { border-color: $complaint-status-in-progress; }
+      &.status_change { border-color: $complaint-status-pending; }
+      &.resolved { border-color: $complaint-status-resolved; }
+      &.closed { border-color: $complaint-status-closed; }
+
+      .marker-icon {
+        font-size: 1.2rem;
+      }
+    }
+
+    .timeline-content {
+      flex: 1;
+      padding-bottom: $spacing-lg;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+
+        .timeline-title {
+          font-weight: $font-weight-semibold;
+          color: $text-primary;
+          font-size: $font-size-sm;
+        }
+
+        .timeline-date {
+          font-size: $font-size-xs;
+          color: $text-secondary;
+        }
+      }
+
+      .timeline-description {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-sm;
+        line-height: 1.5;
+      }
+
+      .timeline-meta {
+        display: flex;
+        gap: $spacing-md;
+
+        .meta-item {
+          font-size: $font-size-xs;
+          color: $text-secondary;
+        }
+      }
+    }
+  }
+}
+
+// Estilos de comentarios
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  .comment-item {
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background: $bg-secondary;
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+
+      .comment-author {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .author-avatar {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: $complaint-primary-color;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: $font-weight-bold;
+          font-size: $font-size-sm;
+        }
+
+        .author-name {
+          font-weight: $font-weight-medium;
+          color: $text-primary;
+          font-size: $font-size-sm;
+        }
+      }
+
+      .comment-date {
+        font-size: $font-size-xs;
+        color: $text-secondary;
+      }
+    }
+
+    .comment-content {
+      margin-bottom: $spacing-sm;
+
+      p {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        line-height: 1.5;
+      }
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: $spacing-sm;
+
+      .comment-action {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        padding: 4px 8px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-sm;
+        background: white;
+        cursor: pointer;
+        transition: all $complaint-transition-base;
+        font-size: $font-size-xs;
+
+        &:hover {
+          background: $complaint-primary-color;
+          color: white;
+          border-color: $complaint-primary-color;
+        }
+
+        .btn-icon {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// Animaciones específicas para denuncias
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design para denuncias
+@media (max-width: $breakpoint-lg) {
+  .complaint-card {
+    .card-actions {
+      flex-direction: column;
+    }
+  }
+
+  .complaints-table {
+    .table-actions {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .complaint-card {
+    .card-content {
+      .complaint-meta {
+        .meta-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}
+
+.filter-select {
+  background: $bg-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: $glass-border;
+  border-radius: $border-radius-lg;
+  padding: $spacing-sm $spacing-md;
+  color: $complaint-primary-color;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  box-shadow: $complaint-shadow-light;
+  appearance: none;
+  outline: none;
+  transition: all $complaint-transition-base;
+  cursor: pointer;
+  min-width: 120px;
+  position: relative;
+
+  &:hover {
+    background: rgba(14, 165, 233, 0.08);
+    box-shadow: $complaint-shadow-medium;
+  }
+  &:focus {
+    background: rgba(14, 165, 233, 0.12);
+    box-shadow: $complaint-shadow-heavy;
+    border-color: $complaint-primary-color;
+  }
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+.big-new-complaint-btn {
+  padding: 0.55rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 1.7rem;
+  min-width: 120px;
+  min-height: 38px;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.16), $complaint-shadow-medium;
+  background: $gradient-water-primary;
+  border: none;
+  color: white;
+  font-weight: $font-weight-bold;
+  cursor: pointer;
+  transition: all $complaint-transition-base;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &:hover {
+    transform: translateY(-1.5px) scale(1.03);
+    box-shadow: 0 10px 32px rgba(14, 165, 233, 0.20), $complaint-shadow-heavy;
+  }
+}
+
+// Estilos para el modal de nueva denuncia
+.modal-content {
+  max-width: 480px !important;
+  min-width: 280px;
+  width: 96vw;
+  max-height: 85vh;
+  margin: 2rem auto;
+  padding: 1.5rem 1.3rem 1.5rem 1.3rem;
+  border-radius: 1.1rem;
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 8px 32px rgba(14, 165, 233, 0.13), 0 1.5px 8px rgba(31,38,135,0.07);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  z-index: 2;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e7ef;
+}
+
+.modal-title-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.modal-main-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0ea5e9;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.01em;
+  text-align: left;
+  flex: 1;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 0.5rem;
+}
+
+.complaint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.form-group, .form-row {
+  margin-bottom: 0.65rem;
+}
+
+.form-actions {
+  margin-top: 2.2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.1rem;
+}
+
+@media (min-width: 600px) {
+  .modal-content {
+    max-width: 540px;
+  }
+}
+
+.complaint-form input[type='text'],
+.complaint-form textarea,
+.complaint-form select,
+.complaint-form .complaint-map,
+.complaint-form input[readonly] {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+.complaint-form input[type='text'],
+.complaint-form textarea,
+.complaint-form select {
+  padding: 0.32rem 0.7rem;
+  font-size: 0.97rem;
+  border-radius: 0.7rem;
+  border: 1.2px solid #d1e7f7;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 1px 4px rgba(14,165,233,0.04);
+  margin-bottom: 0.18rem;
+  width: 94%;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.complaint-form input[type='text']:focus,
+.complaint-form textarea:focus,
+.complaint-form select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 4px 16px rgba(14,165,233,0.10);
+  background: rgba(240,249,255,0.95);
+  outline: none;
+}
+.complaint-form textarea {
+  min-height: 80px;
+  max-height: 160px;
+  resize: vertical;
+}
+.complaint-form .form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+}
+.complaint-form .form-row > .form-group {
+  flex: 1;
+}
+.complaint-form .complaint-map {
+  min-height: 150px;
+  height: 150px;
+  max-height: 180px;
+  border-radius: 0.7rem;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.08);
+  border: 1px solid #e0e7ef;
+  margin-bottom: 0.5rem;
+}
+.complaint-form label {
+  font-weight: 700;
+  color: #0ea5e9;
+  margin-bottom: 0.18rem;
+  font-size: 0.97rem;
+  letter-spacing: 0.01em;
+  display: block;
+}
+.complaint-form .form-group,
+.complaint-form .form-row {
+  margin-bottom: 0.7rem;
+}
+.complaint-form .form-group:first-child label {
+  margin-top: 0.5rem !important;
+  display: block;
+}
+.complaint-form .section-title {
+  font-weight: 700;
+  color: #0ea5e9;
+  font-size: 1.08rem;
+  margin-bottom: 0.7rem;
+  margin-top: 1.2rem;
+  display: block;
+}
+
+.modal-main-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0ea5e9;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.01em;
+  text-align: left;
+  flex: 1;
+  line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    max-width: 99vw;
+    min-width: 0;
+    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+  }
+  .complaint-form .form-row {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .complaint-form input[type='text'],
+  .complaint-form textarea,
+  .complaint-form select,
+  .complaint-form .complaint-map,
+  .complaint-form input[readonly] {
+    max-width: 100%;
+  }
+}
+
+.responsive-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+}
+@media (max-width: 600px) {
+  .responsive-row {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}
+
+.complaint-form .form-group {
+  margin-bottom: 1.1rem;
+}
+.complaint-form label {
+  margin-bottom: 0.35rem;
+}
+.complaint-form .complaint-map {
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+.complaint-form .form-row,
+.responsive-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+  align-items: flex-end;
+}
+.complaint-form .form-row > .form-group select,
+.responsive-row > .form-group select {
+  margin-top: auto;
+}
+
+input[type="file"] {
+  display: none !important;
+} 

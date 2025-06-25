@@ -1,0 +1,1323 @@
+@use './_variables' as *;
+
+// Variables específicas del mapa - Glassmorphism Water Theme
+$map-primary-color: #0ea5e9;
+$map-secondary-color: #06b6d4;
+$map-success-color: #10b981;
+$map-warning-color: #f59e0b;
+$map-danger-color: #ef4444;
+$map-info-color: #0891b2;
+
+// Colores de dispositivos - Water Theme
+$device-sensor-color: #0891b2;
+$device-valve-color: #0ea5e9;
+$device-meter-color: #10b981;
+$device-pump-color: #f59e0b;
+$device-offline-color: #64748b;
+
+// Estados de dispositivos - Glassmorphism
+$status-online: #10b981;
+$status-offline: #ef4444;
+$status-alert: #f59e0b;
+$status-maintenance: #0891b2;
+
+// Gradientes del mapa - Glassmorphism
+$map-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+$map-gradient-secondary: linear-gradient(135deg, #0891b2 0%, #0ea5e9 100%);
+$map-gradient-tertiary: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+$map-gradient-background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f2fe 100%);
+$map-gradient-header: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+
+// Sombras específicas del mapa - Glassmorphism
+$map-shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+$map-shadow-medium: 0 12px 40px rgba(31, 38, 135, 0.4);
+$map-shadow-heavy: 0 20px 60px rgba(31, 38, 135, 0.5);
+
+// Animaciones del mapa
+$map-transition-fast: 0.15s ease;
+$map-transition-base: 0.3s ease;
+$map-transition-slow: 0.5s ease;
+
+// Z-index específicos del mapa
+$map-z-index-base: 100;
+$map-z-index-overlay: 200;
+$map-z-index-controls: 300;
+$map-z-index-popup: 400;
+$map-z-index-modal: 500;
+
+// Estilos principales de la página del mapa
+.map-page {
+  min-height: 100vh;
+  background: $map-gradient-background;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(8, 145, 178, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// Cabecera glassmorphism
+.gradient-header {
+  position: relative;
+  background: $map-gradient-primary;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: $glass-border;
+  box-shadow: $map-shadow-light;
+  z-index: 10;
+  
+  .header-content {
+    padding: $spacing-xl $spacing-xxl;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    
+    &.sticky {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-title-block {
+      h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: $font-weight-bold;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        margin: 0 0 $spacing-sm 0;
+      }
+      
+      .subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: $font-size-lg;
+        margin: 0;
+        font-weight: $font-weight-medium;
+      }
+    }
+    
+    .header-stats {
+      display: flex;
+      gap: $spacing-lg;
+      
+      .stat-card {
+        background: $bg-glass;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: $glass-border;
+        border-radius: $border-radius-xl;
+        padding: $spacing-lg;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        box-shadow: $map-shadow-light;
+        transition: all $map-transition-base;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: $map-shadow-medium;
+        }
+        
+        .stat-icon {
+          font-size: 2rem;
+          width: 50px;
+          height: 50px;
+          border-radius: $border-radius-lg;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &.online {
+            background: rgba($status-online, 0.2);
+            color: $status-online;
+          }
+          
+          &.offline {
+            background: rgba($status-offline, 0.2);
+            color: $status-offline;
+          }
+          
+          &.alert {
+            background: rgba($status-alert, 0.2);
+            color: $status-alert;
+          }
+          
+          &.maintenance {
+            background: rgba($status-maintenance, 0.2);
+            color: $status-maintenance;
+          }
+        }
+        
+        .stat-info {
+          display: flex;
+          flex-direction: column;
+          
+          .stat-number {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: white;
+          }
+          
+          .stat-label {
+            font-size: $font-size-sm;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: $font-weight-medium;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Contenido principal del mapa
+.map-main-content {
+  display: flex;
+  height: calc(100vh - 200px);
+  position: relative;
+  z-index: 1;
+  
+  &.modern-map-main-content {
+    .map-sidebar {
+      width: 350px;
+      background: $bg-glass;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: $glass-border;
+      box-shadow: $map-shadow-light;
+      overflow-y: auto;
+      
+      &.modern-map-sidebar {
+        .sidebar-section {
+          padding: $spacing-xl;
+          border-bottom: $glass-border;
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          h3 {
+            color: $text-primary;
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            margin-bottom: $spacing-lg;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            
+            .control-btn {
+              background: $bg-glass;
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: $glass-border;
+              border-radius: $border-radius-lg;
+              padding: $spacing-md;
+              color: $text-primary;
+              font-size: $font-size-base;
+              font-weight: $font-weight-medium;
+              cursor: pointer;
+              transition: all $map-transition-base;
+              display: flex;
+              align-items: center;
+              gap: $spacing-sm;
+              
+              &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+                box-shadow: $map-shadow-light;
+              }
+              
+              &.primary {
+                background: $gradient-water-primary;
+                color: white;
+                
+                &:hover {
+                  box-shadow: $map-shadow-medium;
+                }
+              }
+              
+              .btn-icon {
+                font-size: 1.2rem;
+              }
+            }
+          }
+          
+          .filter-group {
+            margin-bottom: 1.5rem;
+          }
+          
+          .filter-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $text-secondary;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          .input-icon-group {
+            display: flex;
+            align-items: center;
+            background: $bg-glass;
+            border: $glass-border;
+            border-radius: $border-radius-lg;
+            padding: 0.2rem 0.7rem 0.2rem 0.4rem;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.04);
+            margin-bottom: 0.1rem;
+          }
+          
+          .input-icon {
+            font-size: 1.1rem;
+            color: $map-primary-color;
+            opacity: 0.85;
+          }
+          
+          .filter-group select,
+          .filter-group input[type="date"] {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: $text-primary;
+            font-size: 1rem;
+            padding: 0.5rem 0.2rem;
+            box-shadow: none;
+          }
+          
+          .filter-group input[type="date"] {
+            background: $bg-glass;
+            border: $glass-border;
+            border-radius: $border-radius-lg;
+            padding: $spacing-xs $spacing-md;
+            color: $map-primary-color;
+            font-size: $font-size-base;
+            font-weight: $font-weight-medium;
+            box-shadow: $map-shadow-light;
+            outline: none;
+            transition: all $map-transition-base;
+            cursor: pointer;
+            min-width: 120px;
+            margin-top: 2px;
+
+            &:hover {
+              background: rgba(14, 165, 233, 0.08);
+              box-shadow: $map-shadow-medium;
+            }
+            &:focus {
+              background: rgba(14, 165, 233, 0.12);
+              box-shadow: $map-shadow-heavy;
+              border-color: $map-primary-color;
+            }
+          }
+          
+          .nearby-devices {
+            .device-item {
+              background: $bg-glass;
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: $glass-border;
+              border-radius: $border-radius-lg;
+              padding: $spacing-md;
+              margin-bottom: $spacing-sm;
+              cursor: pointer;
+              transition: all $map-transition-base;
+              display: flex;
+              align-items: center;
+              gap: $spacing-md;
+              
+              &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(4px);
+                box-shadow: $map-shadow-light;
+              }
+              
+              &.online {
+                border-left: 3px solid $status-online;
+              }
+              
+              &.offline {
+                border-left: 3px solid $status-offline;
+              }
+              
+              &.alert {
+                border-left: 3px solid $status-alert;
+              }
+              
+              .device-icon {
+                font-size: 1.5rem;
+                width: 40px;
+                height: 40px;
+                border-radius: $border-radius-sm;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                &.sensor {
+                  background: rgba($device-sensor-color, 0.2);
+                  color: $device-sensor-color;
+                }
+                
+                &.valve {
+                  background: rgba($device-valve-color, 0.2);
+                  color: $device-valve-color;
+                }
+                
+                &.meter {
+                  background: rgba($device-meter-color, 0.2);
+                  color: $device-meter-color;
+                }
+                
+                &.pump {
+                  background: rgba($device-pump-color, 0.2);
+                  color: $device-pump-color;
+                }
+              }
+              
+              .device-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                
+                .device-name {
+                  font-weight: $font-weight-semibold;
+                  color: $text-primary;
+                  font-size: $font-size-sm;
+                }
+                
+                .device-distance {
+                  font-size: $font-size-xs;
+                  color: $text-secondary;
+                }
+              }
+              
+              .device-status {
+                font-size: $font-size-xs;
+                font-weight: $font-weight-medium;
+                padding: $spacing-xs $spacing-sm;
+                border-radius: $border-radius-sm;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                
+                &.online {
+                  background: rgba($status-online, 0.2);
+                  color: $status-online;
+                }
+                
+                &.offline {
+                  background: rgba($status-offline, 0.2);
+                  color: $status-offline;
+                }
+                
+                &.alert {
+                  background: rgba($status-alert, 0.2);
+                  color: $status-alert;
+                }
+              }
+            }
+            
+            .no-devices {
+              text-align: center;
+              color: $text-muted;
+              font-style: italic;
+              padding: $spacing-lg;
+            }
+          }
+        }
+      }
+    }
+    
+    .map-container {
+      flex: 1;
+      position: relative;
+      background: $bg-glass;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: $border-radius-xl;
+      margin: $spacing-xl;
+      box-shadow: $map-shadow-light;
+      overflow: hidden;
+      
+      &.modern-map-container {
+        .map-header {
+          background: $map-gradient-header;
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          padding: $spacing-lg $spacing-xl;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: $glass-border;
+          
+          &.modern-map-header {
+            .map-title {
+              h2 {
+                color: $text-primary;
+                font-size: $font-size-xl;
+                font-weight: $font-weight-bold;
+                margin: 0 0 $spacing-xs 0;
+              }
+              
+              .map-subtitle {
+                color: $text-secondary;
+                font-size: $font-size-sm;
+                font-weight: $font-weight-medium;
+              }
+            }
+            
+            .map-actions {
+              display: flex;
+              gap: $spacing-sm;
+              
+              .action-btn {
+                background: $bg-glass;
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: $glass-border;
+                border-radius: $border-radius-lg;
+                padding: $spacing-sm $spacing-md;
+                color: $text-primary;
+                font-size: $font-size-sm;
+                font-weight: $font-weight-medium;
+                cursor: pointer;
+                transition: all $map-transition-base;
+                display: flex;
+                align-items: center;
+                gap: $spacing-xs;
+                
+                &:hover {
+                  background: rgba(255, 255, 255, 0.2);
+                  transform: translateY(-1px);
+                  box-shadow: $map-shadow-light;
+                }
+                
+                .btn-icon {
+                  font-size: 1rem;
+                }
+              }
+            }
+          }
+        }
+        
+        .map-viewport {
+          position: relative;
+          height: calc(100% - 80px);
+          background: $map-gradient-secondary;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+          }
+          
+          .map-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            
+            .map-background {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              
+              .map-grid {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: 
+                  linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Marcadores de dispositivos glassmorphism
+.device-marker {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: $map-shadow-light;
+  cursor: pointer;
+  transition: all $map-transition-base;
+  z-index: $map-z-index-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    transform: scale(1.3);
+    box-shadow: $map-shadow-medium;
+  }
+  
+  .marker-icon {
+    font-size: 1.2rem;
+    color: white;
+  }
+  
+  .marker-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.6);
+    animation: pulse-alert 1.5s infinite;
+  }
+  
+  &.sensor {
+    background: $device-sensor-color;
+    
+    &.online { background: $device-sensor-color; }
+    &.offline { background: $device-offline-color; }
+    &.alert { 
+      background: $status-alert;
+      animation: pulse-alert 1.5s infinite;
+    }
+  }
+  
+  &.valve {
+    background: $device-valve-color;
+    
+    &.online { background: $device-valve-color; }
+    &.offline { background: $device-offline-color; }
+    &.alert { 
+      background: $status-alert;
+      animation: pulse-alert 1.5s infinite;
+    }
+  }
+  
+  &.meter {
+    background: $device-meter-color;
+    
+    &.online { background: $device-meter-color; }
+    &.offline { background: $device-offline-color; }
+    &.alert { 
+      background: $status-alert;
+      animation: pulse-alert 1.5s infinite;
+    }
+  }
+  
+  &.pump {
+    background: $device-pump-color;
+    
+    &.online { background: $device-pump-color; }
+    &.offline { background: $device-offline-color; }
+    &.alert { 
+      background: $status-alert;
+      animation: pulse-alert 1.5s infinite;
+    }
+  }
+}
+
+// Popup de dispositivos glassmorphism
+.device-popup {
+  position: absolute;
+  background: $bg-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: $glass-border;
+  border-radius: $border-radius-xl;
+  box-shadow: $map-shadow-heavy;
+  padding: $spacing-lg;
+  min-width: 300px;
+  z-index: $map-z-index-popup;
+  animation: popupSlide 0.3s ease-out;
+  
+  .popup-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: $glass-border;
+    
+    .device-icon {
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: $border-radius-lg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.sensor {
+        background: rgba($device-sensor-color, 0.2);
+        color: $device-sensor-color;
+      }
+      
+      &.valve {
+        background: rgba($device-valve-color, 0.2);
+        color: $device-valve-color;
+      }
+      
+      &.meter {
+        background: rgba($device-meter-color, 0.2);
+        color: $device-meter-color;
+      }
+      
+      &.pump {
+        background: rgba($device-pump-color, 0.2);
+        color: $device-pump-color;
+      }
+    }
+    
+    .device-info {
+      flex: 1;
+      
+      .device-name {
+        font-weight: $font-weight-bold;
+        color: $text-primary;
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .device-id {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+      }
+    }
+    
+    .device-status {
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      
+      &.online {
+        background: rgba($status-online, 0.2);
+        color: $status-online;
+      }
+      
+      &.offline {
+        background: rgba($status-offline, 0.2);
+        color: $status-offline;
+      }
+      
+      &.alert {
+        background: rgba($status-alert, 0.2);
+        color: $status-alert;
+      }
+    }
+  }
+  
+  .popup-content {
+    margin-bottom: $spacing-lg;
+    
+    .metric-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .metric-label {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+      }
+      
+      .metric-value {
+        color: $text-primary;
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+  
+  .popup-actions {
+    display: flex;
+    gap: $spacing-sm;
+    
+    .popup-btn {
+      flex: 1;
+      background: $gradient-water-primary;
+      border: none;
+      border-radius: $border-radius-lg;
+      padding: $spacing-sm;
+      color: white;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all $map-transition-base;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: $map-shadow-light;
+      }
+    }
+  }
+}
+
+// Controles del mapa glassmorphism
+.map-controls {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  z-index: $map-z-index-controls;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  
+  .control-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: $bg-glass;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: $glass-border;
+    box-shadow: $map-shadow-medium;
+    cursor: pointer;
+    transition: all $map-transition-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: $text-primary;
+    
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: $map-shadow-heavy;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    &.active {
+      background: $gradient-water-primary;
+      color: white;
+    }
+  }
+}
+
+// Leyenda del mapa glassmorphism
+.map-legend {
+  position: absolute;
+  bottom: $spacing-md;
+  left: $spacing-md;
+  background: $bg-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: $glass-border;
+  border-radius: $border-radius-xl;
+  box-shadow: $map-shadow-light;
+  padding: $spacing-lg;
+  z-index: $map-z-index-overlay;
+  
+  h4 {
+    color: $text-primary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-md;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      
+      .legend-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        
+        &.sensor {
+          background: $device-sensor-color;
+          color: white;
+        }
+        
+        &.valve {
+          background: $device-valve-color;
+          color: white;
+        }
+        
+        &.meter {
+          background: $device-meter-color;
+          color: white;
+        }
+        
+        &.pump {
+          background: $device-pump-color;
+          color: white;
+        }
+        
+        &.offline {
+          background: $device-offline-color;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Panel de detalles glassmorphism
+.device-details-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: $bg-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: $glass-border;
+  box-shadow: $map-shadow-heavy;
+  transition: right $map-transition-slow;
+  z-index: $map-z-index-modal;
+  overflow-y: auto;
+  
+  &.open {
+    right: 0;
+  }
+  
+  .panel-header {
+    background: $map-gradient-header;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: $glass-border;
+    
+    h3 {
+      color: $text-primary;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      margin: 0;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: $text-primary;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: $spacing-xs;
+      border-radius: 50%;
+      transition: all $map-transition-fast;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+  
+  .panel-content {
+    padding: $spacing-xl;
+    
+    .device-info {
+      .device-header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+        padding-bottom: $spacing-lg;
+        border-bottom: $glass-border;
+        
+        .device-icon {
+          font-size: 3rem;
+          width: 80px;
+          height: 80px;
+          border-radius: $border-radius-xl;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &.sensor {
+            background: rgba($device-sensor-color, 0.2);
+            color: $device-sensor-color;
+          }
+          
+          &.valve {
+            background: rgba($device-valve-color, 0.2);
+            color: $device-valve-color;
+          }
+          
+          &.meter {
+            background: rgba($device-meter-color, 0.2);
+            color: $device-meter-color;
+          }
+          
+          &.pump {
+            background: rgba($device-pump-color, 0.2);
+            color: $device-pump-color;
+          }
+        }
+        
+        .device-details {
+          flex: 1;
+          
+          .device-name {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+          }
+          
+          .device-id {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            margin-bottom: $spacing-sm;
+          }
+          
+          .device-status {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
+            padding: $spacing-xs $spacing-md;
+            border-radius: $border-radius-lg;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            
+            &.online {
+              background: rgba($status-online, 0.2);
+              color: $status-online;
+            }
+            
+            &.offline {
+              background: rgba($status-offline, 0.2);
+              color: $status-offline;
+            }
+            
+            &.alert {
+              background: rgba($status-alert, 0.2);
+              color: $status-alert;
+            }
+          }
+        }
+      }
+      
+      .device-metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+        
+        .metric-card {
+          background: $bg-glass;
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: $glass-border;
+          border-radius: $border-radius-lg;
+          padding: $spacing-lg;
+          text-align: center;
+          transition: all $map-transition-base;
+          
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $map-shadow-light;
+          }
+          
+          .metric-value {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: $text-primary;
+            margin-bottom: $spacing-xs;
+          }
+          
+          .metric-label {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            font-weight: $font-weight-medium;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+      }
+      
+      .device-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-md;
+        margin-bottom: $spacing-xl;
+        
+        .action-btn {
+          background: $bg-glass;
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: $glass-border;
+          border-radius: $border-radius-lg;
+          padding: $spacing-md;
+          color: $text-primary;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-medium;
+          cursor: pointer;
+          transition: all $map-transition-base;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-xs;
+          
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: $map-shadow-light;
+          }
+          
+          &.danger {
+            background: rgba($map-danger-color, 0.1);
+            color: $map-danger-color;
+            border-color: rgba($map-danger-color, 0.3);
+            
+            &:hover {
+              background: rgba($map-danger-color, 0.2);
+            }
+          }
+          
+          .btn-icon {
+            font-size: 1rem;
+          }
+          
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes pulse-alert {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes popupSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.map-refresh-btn {
+  width: 100%;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.10);
+  transition: transform 0.1s;
+  position: relative;
+  margin-top: 1.2rem;
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+  }
+  .btn-icon {
+    font-size: 1.3rem;
+    margin-right: 0.3rem;
+  }
+}
+
+.popup-glass {
+  background: $bg-glass;
+  border-radius: $border-radius-xl;
+  box-shadow: $map-shadow-heavy;
+  padding: 1.1rem 1.2rem 1rem 1.2rem;
+  min-width: 220px;
+  max-width: 320px;
+  font-family: inherit;
+  color: $text-primary;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  animation: popupSlide 0.3s ease-out;
+}
+.popup-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $map-primary-color;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.popup-info-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.popup-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.popup-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.97rem;
+  border-radius: $border-radius-lg;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: $bg-glass;
+  color: $map-primary-color;
+  &:hover {
+    background: $gradient-water-primary;
+    color: white;
+    box-shadow: $map-shadow-medium;
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: scale(0.97);
+    box-shadow: $map-shadow-light;
+  }
+  &.primary {
+    background: $gradient-water-primary;
+    color: white;
+  }
+  .btn-icon {
+    font-size: 1.1rem;
+    margin-right: 0.2rem;
+  }
+}
+
+.legend-card-glass {
+  background: $bg-glass;
+  border-radius: $border-radius-xl;
+  box-shadow: $map-shadow-light;
+  padding: $spacing-lg $spacing-xl;
+  margin-top: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-md;
+  border: $glass-border;
+
+  .legend-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $map-primary-color;
+    margin-bottom: $spacing-xs;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+  .legend-list-modern {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    .legend-dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-right: $spacing-sm;
+      vertical-align: middle;
+    }
+    .legend-label {
+      font-weight: $font-weight-medium;
+      color: $text-primary;
+      margin-right: $spacing-xs;
+    }
+    .legend-range {
+      color: $text-secondary;
+      font-size: $font-size-xs;
+      margin-left: $spacing-xs;
+    }
+  }
+}
+
+.filter-select {
+  font-size: 0.98rem;
+  padding: $spacing-xs $spacing-md;
+  min-width: 100px;
+}
+
+.legend-dot-bajo {
+  background: #10b981;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+.legend-dot-medio {
+  background: #f59e0b;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+.legend-dot-alto {
+  background: #facc15;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(250, 204, 21, 0.15);
+}
+.legend-dot-muyalto {
+  background: #ef4444;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+} 
