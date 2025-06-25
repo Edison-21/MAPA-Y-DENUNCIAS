@@ -124,6 +124,7 @@ cd iot_water
 ### 2. Instalar dependencias
 ```bash
 npm install
+npm install chart.js 
 ```
 
 ### 3. Ejecutar en modo desarrollo
